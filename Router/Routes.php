@@ -28,5 +28,10 @@ Route::post('wallets', [Wallets::class, 'create']);
 Route::post('credit', [Wallets::class, 'credit']);
 Route::post('debit', [Wallets::class, 'debit']);
 
+// Test
+Route::post('test', 'tests@create-test@test');
+Route::get('tests', 'tests@get-tests@test');
+Route::get('test/{id:[\d]+}', 'tests@get-test@test');
+
 
 

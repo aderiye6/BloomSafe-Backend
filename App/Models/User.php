@@ -28,4 +28,15 @@ class User extends Model
     {
         return $this->hasMany(Transaction::class);
     }
+
+    public function tests()
+    {
+        return $this->hasMany(Test::class);
+    }
+
+    public function test($test)
+    {
+        return Test::findOne(['id' => $test, 'and.user_id' => $this->id]);
+    }
+
 }
