@@ -68,7 +68,7 @@ class Config
 
     public static function clearDB()
     {
-        $cleardbURl = parse_url(getenv('CLEARDB_DATABASE_URL'));
+        $cleardbURl = parse_url(getenv('CLEARDB_RED_URL'));
         // $cleardbURl = parse_url($url);
         self::$DB_HOST = $cleardbURl['host'] ?? $_ENV['DB_HOST'];
         self::$DB_PASSWORD = $cleardbURl['pass'] ?? $_ENV['DB_PASSWORD'];
