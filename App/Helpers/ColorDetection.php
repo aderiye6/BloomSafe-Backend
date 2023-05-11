@@ -9,7 +9,7 @@ namespace App\Helpers;
  * require_once('ColorDetection.php');
  * $colorDetection = new ColorDetection();
  * $imageColors = $colorDetection->detectColors('oranges.jpg');
- * var_dump($imageColors);
+ * var_dump($imageColor);
  * </code>
  *
  * @author Lukasz Krawczyk <contact@lukaszkrawczyk.eu>
