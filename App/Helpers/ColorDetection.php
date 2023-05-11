@@ -161,7 +161,7 @@ class ColorDetection {
         for ($x = $area['x']['min']; $x <= $area['x']['max']; $x += $pointDistance) {
             for ($y = $area['y']['min']; $y <= $area['y']['max']; $y += $pointDistance) {
                 // get color vector of current pixel
-                $pixelColorVector = imageColorsForIndex($img, imageColorAt($img, $x, $y));
+                $pixelColorVector = imageColorsForIndex($img, imageColorAt($img, intval($x), intval($y)));
                 // remove information about alpha value
                 unset($pixelColorVector['alpha']);
                 // map color for current pixel
