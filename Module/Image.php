@@ -138,4 +138,30 @@ class Image
         }
         return $paths;
     }
+
+    public function detectColor($gdHandle)
+    {
+        
+            $width = imagesx($gdHandle);
+            $height = imagesy($gdHandle);
+    
+            $totalBrightness = 0;
+    
+            for ($x = 0; $x < $width; $x++) {
+                for ($y = 0; $y < $height; $y++) {
+                    $rgb = imagecolorat($gdHandle, $x, $y);
+    
+                    $red = ($rgb >> 16) & 0xFF;
+                    $green = ($rgb >> 8) & 0xFF;
+                    $blue = $rgb & 0xFF;
+    
+                    $totalBrightness += (max($red, $green, $blue) + min($red, $green, $blue)) / 2;
+                }
+            }
+    
+            imagedestroy($gdHandle);
+    
+            return ($totalBrightness / ($width * $height)) / 2.55;
+        
+    }
 }

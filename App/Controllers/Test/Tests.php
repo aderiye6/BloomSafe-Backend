@@ -2,6 +2,7 @@
 
 namespace App\Controllers\Test;
 
+use App\Helpers\ColorDetection;
 use App\Helpers\Filters;
 use App\Helpers\Paginate;
 use App\Models\Test;
@@ -21,21 +22,59 @@ class Tests extends TestPipe
      */
     public function _createTest($test)
     {
+    // {       Res::json($test->coordinates); 
         $data = $this->createTestPipe($test);
-        $result = ($data->score / $this->standard);
-
         $image = new Image($test->image);
         $img = (object) $image->upload();
-
+        $color = new ColorDetection();
+        $imgc = $color->detectColors($img->file);
+        $orangeDepth = intval($imgc['orange']);
+        $yellowDepth = intval($imgc['yellow']);
+        if($orangeDepth == 0 && $yellowDepth == 0)
+        {
+            $score = 0;
+        }elseif($orangeDepth > 0 && $yellowDepth > 0)
+        {
+            $score = ($orangeDepth + $yellowDepth)/10;
+        }elseif($orangeDepth <= 0 && $yellowDepth > 0)
+        {
+            $score = $yellowDepth/10;
+        }elseif($orangeDepth > 0 && $yellowDepth <= 0)
+        {
+            $score = $orangeDepth/10;
+        }else{
+            $score = 'Unidentified Color';
+            }
+            $result = ($score / $this->standard);
+                if($result > 0 && $result <= 0.3)
+                {
+                    $comment = 'Slightly Safe';
+                }elseif($result > 0.3 && $result <= 0.7)
+                {
+                    $comment = 'Slightly Bad';
+                }
+                elseif($result > 0.7 && $result <= 1.0)
+                {
+                    $comment = 'Really Bad';
+                }else{
+                    $comment = 'Invalid Image';
+                }
         $saved = Test::dump([
             'user_id' => $this->user->id,
             'image' => $img->file,
             'result' => $result,
+            'score' => $score,
+            'longitude' => $data->longitude,
+            'latitude' => $data->latitude,
+            'comment' => $comment,
             'metadata' => json_encode([
                 'file' => $test->image,
-                'score' => $data->score,
+                'score' => $score,
                 'result' => $result,
-                'standard' => $this->standard
+                'standard' => $this->standard,
+               
+                
+                
             ]),
             'record_time' => time(),
         ]);

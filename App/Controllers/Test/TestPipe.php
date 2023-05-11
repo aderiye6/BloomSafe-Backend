@@ -15,13 +15,17 @@ class TestPipe extends Authenticated
   public function createTestPipe(Pipes $pipe)
   {
     return $pipe->pipe([
-      'score' => $pipe
-        ->score()
-        ->isint()
-        ->lte(1)
-        ->gte(10)
-        ->toint()
-        ->score,
+      // 'score' => $pipe
+      //   ->score()
+      //   ->isint()
+      //   ->lte(1)
+      //   ->gte(10)
+      //   ->toint()
+      //   ->score,
+        'longitude' => $pipe
+        ->longitude,
+        'latitude' => $pipe
+        ->latitude
     ]);
   }
   public function getTestsPipe(Pipes $pipes)
