@@ -11,7 +11,7 @@ function Secure($string, $br = true, $strip = 0)
 {
     global $conn;
     if (is_array($string) || is_object($string)) return;
-    $string = trim($string);
+    $string = trim((string) $string);
     $string = htmlspecialchars($string, ENT_QUOTES);
     if ($br == true) {
         $string = str_replace('\r\n', ' <br>', $string);
