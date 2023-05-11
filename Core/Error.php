@@ -1,5 +1,6 @@
 <?php
 namespace Core;
+use Exception;
 
 /**
  * *************** Error *******************
@@ -25,7 +26,7 @@ class Error
     public static function errorHandler($level, $message, $file, $line)
     {
         if(error_reporting() !== 0){
-            throw new \ExceptionError($message, 0, $level, $file, $line);
+            throw new \Exception($message, 0);
         }
     }
 
