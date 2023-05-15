@@ -69,8 +69,9 @@ trait Help
     public static function sendPasswordReset($email)
     {
         $user = self::findByEmail($email);
-        if (!$user) Res::status(400)->error(['message' => 'Request not found', "email" => "invalid email addrss"]);
+        if (!$user) Res::status(400)->error(['message' => 'Request not found', "email" => "invalid email address"]);
         $user->useToken()->startPasswordReset();
+        $user->forgotEmail();
         // if (!$user->forgotEmail()) Res::status(400)->json(['error' => 'Unable to send verification email']);
         Res::json(['message' => 'Email Successfully sent']);
     }
@@ -134,10 +135,10 @@ trait Help
         $user = static::findOne([
             'password_reset_hash' => $token_hash
         ]);
-        if (!$user) Res::status(400)->json(['error' => 'Invalid Token']);
+        if (!$user) Res::status(401)->json(['error' => 'Invalid Token']);
 
         if (strtotime($user->password_reset_expiry) > time()) return $user;
-        Res::status(400)->json(['error' => 'Token Expired']);
+        Res::status(401)->json(['error' => 'Token Expired']);
     }
 
     /**

@@ -22,7 +22,7 @@ class Authenticated extends Controller
                     Res::status(400)->error(['token' => "Token Expired"]);
                 endif;
             else :
-                Res::status(400)->error(["token" => "Invalid Token"]);
+                Res::status(401)->error(["token" => "Invalid Token"]);
             endif;
         else :
             Res::status(401)->error(["token" => "No Token"]);

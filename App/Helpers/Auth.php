@@ -84,7 +84,7 @@ class Auth extends User
         $loggedIn = User::authenticate(Secure($email), $password);
         if (!$loggedIn) {
             // self::badLogin();
-            Res::status(400)->error([
+            Res::status(401)->error([
                 'identifier' => $email,
                 'password' => $password,
                 'message' => "Bad login credentials"

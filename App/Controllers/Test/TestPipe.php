@@ -32,7 +32,7 @@ class TestPipe extends Authenticated
   {
     return $pipes->pipe([
       'page' => $pipes->page()->default(1)->isint()->page,
-      'limit' => $pipes->limit()->default(1)->isint()->limt
+      'limit' => $pipes->limit()->default(1)->isint()->limit
     ]);
   }
 }

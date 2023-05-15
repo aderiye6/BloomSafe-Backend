@@ -84,7 +84,7 @@ class Tests extends TestPipe
     public function _getTests($test)
     {
         $pg = Paginate::page((array) $this->getTestsPipe($test));
-        $tests = $this->user->paginate($pg->page)->tests();
+        $tests = $this->user->tests();
 
         $filtered = Filters::from($tests)->append(['metadata' => function ($data) {
             return json_decode($data);
