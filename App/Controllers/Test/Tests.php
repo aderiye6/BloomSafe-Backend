@@ -44,7 +44,9 @@ class Tests extends TestPipe
             $score = $orangeDepth/10;
         }else{
             $score = 'Unidentified Color';
+            
             }
+            
             $result = ($score / $this->standard);
                 if($result > 0 && $result <= 0.3)
                 {
@@ -57,7 +59,8 @@ class Tests extends TestPipe
                 {
                     $comment = 'Really Bad';
                 }else{
-                    $comment = 'Invalid Image';
+                    
+                    return Res::json('Unidentified Color or Invalid Image');
                 }
         $saved = Test::dump([
             'user_id' => $this->user->id,
